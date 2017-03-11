@@ -265,6 +265,11 @@ struct Gatedesc {
 	unsigned gd_off_31_16 : 16;  // high bits of offset in segment
 };
 
+struct TrapFrame {
+	uint32_t edi, esi, ebp, xxx, ebx, edx, ecx, eax;
+	int32_t irq;
+};
+
 // Set up a normal interrupt/trap gate descriptor.
 // - istrap: 1 for a trap (= exception) gate, 0 for an interrupt gate.
     //   see section 9.6.1.3 of the i386 reference: "The difference between

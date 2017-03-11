@@ -11,7 +11,8 @@ GDB     := gdb
 
 CFLAGS := -Wall -Werror -Wfatal-errors #开启所有警告, 视警告为错误, 第一个错误结束编译
 CFLAGS += -MD #生成依赖文件
-CFLAGS += -std=gnu11 -m32 -c #编译标准, 目标架构, 只编译
+#CFLAGS += -std=gnu11 -m32 -c #编译标准, 目标架构, 只编译
+CFLAGS += -static -std=gnu89 -m32 -c #编译标准, 目标架构, 只编译
 CFLAGS += -I . #头文件搜索目录
 CFLAGS += -O0 #不开优化, 方便调试
 CFLAGS += -fno-builtin #禁止内置函数
@@ -71,7 +72,7 @@ $(OBJ_BOOT_DIR)/%.o: $(BOOT_DIR)/%.c
 
 $(KERNEL): $(LD_SCRIPT)
 $(KERNEL): $(KERNEL_O) $(LIB_O)
-	$(LD) -m elf_i386 -T $(LD_SCRIPT) -nostdlib -o $@ $^ $(shell $(CC) $(CFLAGS) -print-libgcc-file-name)
+	$(LD) -m elf_i386 -T $(LD_SCRIPT) -o $@ $^ $(shell $(CC) $(CFLAGS) -print-libgcc-file-name)
 
 $(OBJ_LIB_DIR)/%.o : $(LIB_DIR)/%.c
 	@mkdir -p $(OBJ_LIB_DIR)
